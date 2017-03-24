@@ -6,4 +6,6 @@ RUN apt-get update; \
 RUN bash -c "python <(curl https://bootstrap.pypa.io/get-pip.py)"; \
   pip install cqlsh
 
-ENTRYPOINT ["cqlsh"]
+ADD bin/cqlsh-docker /usr/local/bin/
+
+CMD /usr/local/bin/cqlsh-docker

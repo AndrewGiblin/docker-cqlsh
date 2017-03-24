@@ -1,0 +1,63 @@
+#!/bin/bash
+
+host='127.0.0.1:9042'
+port='9042'
+
+cqlsh_flags=(
+    color
+    no-color
+    ssl
+    debug
+)
+
+cqlsh_vars=(
+    username
+    password
+    keyspace
+    file
+    encoding
+    cqlversion
+    execute
+    connect-timeout
+    request-timeout
+)
+
+longopts=''
+
+# host override
+if [[ -n ${!HOST} ]]; then
+    host="${HOST}"
+fi
+
+# port override
+if [[ -n ${!PORT} ]]; then
+    port="${PORT}"
+fi
+
+for cqlsh_var in ${cqlsh_vars[*]}; do
+    # convert to UPPERCASE, replace periods with underscores
+    env_var=$(echo ${cqlsh_var^^} | tr . _)
+
+    # Indirectly lookup env var values via the name of the var.
+    # REF: http://tldp.org/LDP/abs/html/bashver2.html#EX78
+    value=${!env_var}
+    if [[ -n $value ]]; then
+      longopt="--${cqlsh_var}=${value}"
+      longopts+=" ${longopt}"
+    fi
+done
+
+for cqlsh_flag in ${cqlsh_flags[*]}; do
+    # convert to UPPERCASE, replace periods with underscores
+    env_flag=$(echo ${cqlsh_var^^} | tr . _)
+
+    # Indirectly lookup env var values via the name of the var.
+    # REF: http://tldp.org/LDP/abs/html/bashver2.html#EX78
+    value=${!env_flag}
+    if [[ -n $value ]]; then
+      longopt="--${cqlsh_flag}"
+      longopts+=" ${longopt}"
+    fi
+done
+
+exec cqlsh $host $port ${longopts}
