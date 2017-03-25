@@ -25,12 +25,12 @@ cqlsh_vars=(
 longopts=''
 
 # host override
-if [[ -n ${!HOST} ]]; then
+if [[ -n ${HOST} ]]; then
     host="${HOST}"
 fi
 
 # port override
-if [[ -n ${!PORT} ]]; then
+if [[ -n ${PORT} ]]; then
     port="${PORT}"
 fi
 
