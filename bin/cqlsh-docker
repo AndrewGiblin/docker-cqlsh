@@ -62,7 +62,7 @@ done
 
 # protocol version override
 if [[ -n ${PROTOCOL_VERSION} ]]; then
-    sed -i 's/DEFAULT_PROTOCOL_VERSION = [0-9]/DEFAULT_PROTOCOL_VERSION = ${PROTOCOL_VERSION}/' /usr/local/bin/cqlsh
+    sed -i "s/DEFAULT_PROTOCOL_VERSION = [0-9]/DEFAULT_PROTOCOL_VERSION = ${PROTOCOL_VERSION}/" /usr/local/bin/cqlsh
     host="${HOST}"
 fi
 
