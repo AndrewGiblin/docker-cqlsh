@@ -60,6 +60,12 @@ for cqlsh_flag in ${cqlsh_flags[*]}; do
     fi
 done
 
+# protocol version override
+if [[ -n ${PROTOCOL_VERSION} ]]; then
+    sed -i 's/DEFAULT_PROTOCOL_VERSION = [0-9]/DEFAULT_PROTOCOL_VERSION = ${PROTOCOL_VERSION}/' /usr/local/bin/cqlsh
+    host="${HOST}"
+fi
+
 echo "exec cqlsh $host $port ${longopts} ... "
 
 exec cqlsh $host $port ${longopts}
